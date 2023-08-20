@@ -37,7 +37,7 @@ func bake_meshes(value: bool) -> void:
 		hide()
 
 
-func extract_mesh(old_mesh: Mesh,new_mesh: ArrayMesh ,mesh_transform: Transform) -> ArrayMesh:
+func extract_mesh(old_mesh: Mesh, new_mesh: ArrayMesh, mesh_transform: Transform) -> ArrayMesh:
 	for i in range(old_mesh.get_surface_count()):
 		var data = old_mesh.surface_get_arrays(i)
 		var offset: PoolVector3Array = data[ArrayMesh.ARRAY_VERTEX]
