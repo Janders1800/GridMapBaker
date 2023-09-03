@@ -39,15 +39,10 @@ func bake_meshes(value: bool) -> void:
 
 func extract_mesh(old_mesh: Mesh, new_mesh: ArrayMesh, mesh_transform: Transform) -> ArrayMesh:
 	for i in range(old_mesh.get_surface_count()):
-		var data = old_mesh.surface_get_arrays(i)
-		var offset: PoolVector3Array = data[ArrayMesh.ARRAY_VERTEX]
+		var surf_tool := SurfaceTool.new()
+		surf_tool.append_from(old_mesh, i, mesh_transform)
 		
-		for o in range(offset.size()):
-			offset.set(o, mesh_transform.basis.xform(offset[o]) + mesh_transform.origin)
-		
-		data[ArrayMesh.ARRAY_VERTEX] = offset
-		
-		new_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, data)
+		new_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, surf_tool.commit_to_arrays())
 		new_mesh.surface_set_material(material_counter, old_mesh.surface_get_material(i))
 		material_counter +=1
 		
